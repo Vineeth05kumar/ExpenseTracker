@@ -1,10 +1,15 @@
 import Signup from "./components/Pages/Signup";
+import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
+import Welcome from "./components/Pages/Welcome";
 
 function App() {
   return (
-    <div >
-      <Signup />
-    </div>
+    <Router >
+      <Routes>
+        <Route path='/' element={<Signup />} />
+        <Route path='/welcome' element ={<Welcome />} />
+      </Routes>
+    </Router>
   );
 }
 
