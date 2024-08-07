@@ -1,4 +1,4 @@
-import { Button, Container } from "react-bootstrap";
+import { Button, Container} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
@@ -41,9 +41,13 @@ export default function Welcome() {
 
       <h4>
         Your Profile is Incomplete
-        <Button variant="link" onClick={changePage}>Click to complete</Button>
+        <Button variant="link" onClick={changePage}>
+          Click to complete
+        </Button>
       </h4>
-      <Button variant="danger" onClick={emailVerifyHandler}>Verify Email</Button>
+      <Button variant="danger" onClick={emailVerifyHandler}>
+        Verify Email
+      </Button>
     </Container>
   );
 }

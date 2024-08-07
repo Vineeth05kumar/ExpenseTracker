@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
     const navigate = useNavigate();
+
+    const passwordReset = () =>{
+      navigate('/resetPassword')
+    }
     const[formData,setFormData] = useState({
         email:'',
         password:'',
@@ -87,6 +91,8 @@ const Signup = () => {
                 <Button type="submit">{signup ? 'SignUp' : 'Login'}</Button>
               </Form>
               <Card.Footer><Button variant="link" onClick={changeState}>{signup ?  'Have An Account please login' :'Create New Account'   } </Button></Card.Footer>
+              <Card.Footer><Button variant="link" onClick={passwordReset}>Forgot Password</Button></Card.Footer>
+              
             </Card.Body>
           </Card>
         </Col>
