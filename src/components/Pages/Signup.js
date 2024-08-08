@@ -55,7 +55,7 @@ const Signup = () => {
             const data =await response.json();
             console.log(data);
             localStorage.setItem('token',data.idToken);
-            navigate('/welcome');
+            navigate('/expenseform');
             alert("Signup Sucesseful")
         }
         catch(error){
