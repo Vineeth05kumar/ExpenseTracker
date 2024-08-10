@@ -13,7 +13,8 @@ export default function ExpenseList(props) {
         }
       );
       if (response.ok) {
-        props.onDelete(id); // Call the onDelete function from the parent component to update the state
+        console.log("Expense successfully deleted");
+        props.onDelete(id); // Remove the deleted item from the list
       } else {
         console.error("Failed to delete the item.");
       }
@@ -21,27 +22,32 @@ export default function ExpenseList(props) {
       console.error(error);
     }
   };
+
+  const editItem = (item) => {
+    props.onEdit(item); // Pass the item to the parent component to handle editing
+  };
+
   return (
     <Container>
-      {props.items.map((item) => {
-        return (
-          <ListGroup as="ol" numbered>
-            <ListGroup.Item
-              as="li"
-              className="d-flex justify-content-between align-items-start"
-            >
-              <div className="ms-2 me-auto">
-                <div className="fw-bold">{item.catagory}</div>
-                {item.description}
-              </div>
-              <Badge bg="primary">
-                {item.amount}
-              </Badge>
-              <Button onClick={() => deleteItem(item.dataId)}>Delete</Button>
-            </ListGroup.Item>
-          </ListGroup>
-        );
-      })}
+      <ListGroup as="ol" numbered>
+        {props.items.map((item) => (
+          <ListGroup.Item
+            key={item.dataId}
+            as="li"
+            className="d-flex justify-content-between align-items-start"
+          >
+            <div className="ms-2 me-auto">
+              <div className="fw-bold">{item.catagory}</div>
+              {item.description}
+            </div>
+            <Badge bg="primary">{item.amount}</Badge>
+            <Button onClick={() => editItem(item)} className="me-2">
+              Edit
+            </Button>
+            <Button onClick={() => deleteItem(item.dataId)}>Delete</Button>
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
     </Container>
   );
 }

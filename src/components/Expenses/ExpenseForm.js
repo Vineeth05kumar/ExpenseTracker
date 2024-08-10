@@ -1,5 +1,5 @@
 import { Form, Button, Col } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ExpenseForm(props) {
   const [expenseObj, setExpenseObj] = useState({
@@ -8,6 +8,16 @@ export default function ExpenseForm(props) {
     catagory: "",
   });
 
+  useEffect(() => {
+    if (props.editState && props.itemToEdit) {
+      setExpenseObj({
+        amount: props.itemToEdit.amount,
+        description: props.itemToEdit.description,
+        catagory: props.itemToEdit.catagory,
+      });
+    }
+  }, [props.editState, props.itemToEdit]);
+
   const inputHandler = (e) => {
     const { name, value } = e.target;
     setExpenseObj({ ...expenseObj, [name]: value });
@@ -15,26 +25,38 @@ export default function ExpenseForm(props) {
 
   const submitExpense = async (e) => {
     e.preventDefault();
+    const url = props.editState
+      ? `https://testtestapi.vercel.app/e675a4c1989b4c22932fede6dbfc9228/expenseitems/${props.itemToEdit.dataId}`
+      : "https://testtestapi.vercel.app/e675a4c1989b4c22932fede6dbfc9228/expenseitems";
+
+    const method = props.editState ? "PUT" : "POST";
+
     try {
-      const response = await fetch(
-        "https://testtestapi.vercel.app/e675a4c1989b4c22932fede6dbfc9228/expenseitems",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(expenseObj),
-        }
-      );
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(expenseObj),
+      });
 
       if (!response.ok) {
         const errorMsg = await response.json();
         throw new Error(errorMsg.error.message);
       }
+
       const data = await response.json();
       props.onSave(data);
-    } catch {}
+
+      if (props.editState) {
+        props.setEditState(false); // Reset the edit state after saving the edits
+      }
+      setExpenseObj({ amount: "", description: "", catagory: "" }); // Reset the form
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <Form onSubmit={submitExpense}>
       <Form.Group as={Col} controlId="formBasicExpense" className="mb-3">
@@ -64,16 +86,16 @@ export default function ExpenseForm(props) {
         name="catagory"
         className="mb-4"
       >
-        <option>Catagory</option>
+        <option>Category</option>
         <option value="food">Food</option>
         <option value="travel">Travel</option>
         <option value="education">Education</option>
-        <option value="education">Misc..</option>
+        <option value="misc">Miscellaneous</option>
         <option value="clothes">Clothes</option>
         <option value="fuel">Fuel</option>
       </Form.Select>
       <Button type="submit" className="mb-3">
-        Add Expense
+        {props.editState ? "Edit Expense" : "Add Expense"}
       </Button>
     </Form>
   );
