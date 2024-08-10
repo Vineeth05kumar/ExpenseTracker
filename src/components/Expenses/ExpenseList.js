@@ -5,7 +5,7 @@ export default function ExpenseList(props) {
     <Container>
       {props.items.map((item) => {
         return (
-          <ListGroup as="ol" numbered>
+<ListGroup as="ol" numbered >
             <ListGroup.Item
               as="li"
               className="d-flex justify-content-between align-items-start"
@@ -17,7 +17,7 @@ export default function ExpenseList(props) {
               <Badge bg="primary" pill>
                 {item.amount}
               </Badge>
-            </ListGroup.Item>
+            </ListGroup.Item>          
           </ListGroup>
         );
       })}
