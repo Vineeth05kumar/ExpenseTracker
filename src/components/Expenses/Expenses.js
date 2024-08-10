@@ -12,6 +12,10 @@ export default function Expenses () {
         
     }
 
+    const deleteHandler = (id) => {
+        setItems((prevItems) => prevItems.filter((item) => item.dataId !== id)); // Remove the deleted item from the state
+      };
+
     useEffect(() =>{
         const storedItems = async () =>{
             try {
@@ -30,7 +34,7 @@ export default function Expenses () {
     return(
         <>
         <ExpenseForm onSave={saveHandler} />
-        <ExpenseList items={items}/>
+        <ExpenseList items={items} onDelete={deleteHandler} />
         </>
     )
 }
