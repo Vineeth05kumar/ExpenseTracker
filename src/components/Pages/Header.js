@@ -2,16 +2,13 @@ import { Container, Button } from "react-bootstrap";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
-// import { useContext } from 'react';
-// import AuthContext from '../Auth/auth-context';
 
 function Header() {
-  // const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
-    navigate('/login')
+    navigate("/login");
   };
 
   return (

@@ -4,13 +4,12 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import  AuthContextProvider  from "./components/Auth/AuthContextProvider";  // Importing as named export
+import { Provider } from "react-redux";
+import store from "./components/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <AuthContextProvider>
-    <App />
-  // </AuthContextProvider>
+  <Provider store={store}><App /></Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

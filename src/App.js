@@ -5,19 +5,23 @@ import Header from "./components/Pages/Header";
 import Details from "./components/Pages/Details";
 import ResetPassword from "./components/Pages/ResetPassword";
 import Expenses from "./components/Expenses/Expenses";
+// import { Provider } from "react-redux";
+// import store from "./store";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/login" element={<Signup />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/details" element={<Details />} />
-        <Route path="/resetPassword" element={<ResetPassword />} />
-        <Route path="/expenseform" element={<Expenses />}/>
-      </Routes>
-    </Router>
+    // <Provider store={store}>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/login" element={<Signup />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/details" element={<Details />} />
+          <Route path="/resetPassword" element={<ResetPassword />} />
+          <Route path="/expenseform" element={<Expenses />}/>
+        </Routes>
+      </Router>
+    // </Provider>
   );
 }
 

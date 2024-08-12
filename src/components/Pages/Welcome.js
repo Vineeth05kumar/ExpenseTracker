@@ -1,9 +1,10 @@
 import { Button, Container} from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = useSelector(state => state.auth.token);
 
   const emailVerifyHandler = async () => {
     try {
