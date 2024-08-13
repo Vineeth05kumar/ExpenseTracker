@@ -1,12 +1,13 @@
 import { Form, Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function Details() {
   const [personalData, setPersonalData] = useState({
     fullname: "",
     profileLink: "",
   });
-  const token = localStorage.getItem("token");
+  const token = useSelector(state => state.auth.isLoggedIn);
 
   useEffect(() => {
     const fetchData = async () => {

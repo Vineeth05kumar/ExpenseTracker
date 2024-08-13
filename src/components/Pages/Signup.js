@@ -7,10 +7,16 @@ import { authActions } from "../store/authSlice";
 const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+
+
+  const passwordReset = () => {
+    navigate("/resetPassword");
+  };
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
+    // confirmPassword: "",
   });
   const [signup, setSignup] = useState(false);
 
@@ -24,14 +30,18 @@ const Signup = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Password and Confirm Password should be the same");
-      return;
+    // if (formData.password !== formData.confirmPassword) {
+    //   alert("Password and Confirm Password should be same");
+    //   return;
+    // }
+    let url = "";
+    if (signup) {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBcTzMy6yeRL1-JVvi7Rse7eIBsR1Q1mes";
+    } else {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBcTzMy6yeRL1-JVvi7Rse7eIBsR1Q1mes";
     }
-    let url = signup
-      ? "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBcTzMy6yeRL1-JVvi7Rse7eIBsR1Q1mes"
-      : "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBcTzMy6yeRL1-JVvi7Rse7eIBsR1Q1mes";
-
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -44,16 +54,15 @@ const Signup = () => {
           returnSecureToken: true,
         }),
       });
-
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error.message);
       }
-
       const data = await response.json();
-      localStorage.setItem("token", data.idToken);
-      dispatch(authActions.login({ token: data.idToken, userId: data.localId }));
+      console.log(data);
+      dispatch(authActions.login({token:data.idToken,userId:data.localId}))
       navigate("/expenseform");
+      // alert("Signup Sucesseful");
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -69,7 +78,7 @@ const Signup = () => {
       <Row className="justify-content-md-center">
         <Col md={3}>
           <Card>
-            <Card.Header>{signup ? "SignUp" : "Login"}</Card.Header>
+            <Card.Header>{signup ? "SignUp" : "login"}</Card.Header>
             <Card.Body>
               <Form onSubmit={submitHandler}>
                 <Form.Group controlId="formBasicEmail">
@@ -83,7 +92,7 @@ const Signup = () => {
                     required
                   />
                 </Form.Group>
-                <Form.Group controlId="formBasicPassword">
+                <Form.Group controlId="formBasicPassword" className="mb-4">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     name="password"
@@ -94,7 +103,7 @@ const Signup = () => {
                     required
                   />
                 </Form.Group>
-                <Form.Group controlId="formConfirmPassword" className="mb-3">
+                {/* <Form.Group controlId="formConfirmPassword" className="mb-3">
                   <Form.Label>Confirm Password</Form.Label>
                   <Form.Control
                     name="confirmPassword"
@@ -104,14 +113,19 @@ const Signup = () => {
                     onChange={changeHandler}
                     required
                   />
-                </Form.Group>
-                <Button type="submit">{signup ? "SignUp" : "Login"}</Button>
+                </Form.Group> */}
+                <Button type="submit" className="mb-3">{signup ? "SignUp" : "Login"}</Button>
               </Form>
               <Card.Footer>
-                <Button variant="link" onClick={changeState}>
+                <Button variant="link" onClick={changeState} className="mb-2">
                   {signup
                     ? "Have An Account please login"
                     : "Create New Account"}{" "}
+                </Button>
+              </Card.Footer>
+              <Card.Footer>
+                <Button variant="link" onClick={passwordReset}>
+                  Forgot Password
                 </Button>
               </Card.Footer>
             </Card.Body>

@@ -46,11 +46,9 @@ export default function ExpenseForm(props) {
       }
 
       const data = await response.json();
-      props.onSave(data);
+      console.log(data);
+      props.onSave({ ...data, Id: props.itemToEdit.dataId });
 
-      if (props.editState) {
-        props.setEditState(false); // Reset the edit state after saving the edits
-      }
       setExpenseObj({ amount: "", description: "", catagory: "" }); // Reset the form
     } catch (error) {
       console.log(error);

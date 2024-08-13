@@ -1,0 +1,10 @@
+.dark-theme {
+    background-color: #121212;
+    color: #ffffff;
+  }
+  
+  .dark-theme .btn {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    border-color: #333;
+  }

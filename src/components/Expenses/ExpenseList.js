@@ -29,7 +29,7 @@ export default function ExpenseList(props) {
 
   return (
     <Container>
-      <ListGroup as="ol" numbered>
+      <ListGroup as="ol" numbered className="mb-3">
         {props.items.map((item) => (
           <ListGroup.Item
             key={item.dataId}
